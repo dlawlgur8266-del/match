@@ -58,13 +58,7 @@ export default function SignupPage() {
       newErrors.nickname = '2~10자로 입력해주세요.'
     }
     if (!/^\d{8}$/.test(form.studentId)) {
-      newErrors.studentId = '학번은 8자리 숫자여야 합니다.'
-    } else {
-      const year = parseInt(form.studentId.substring(0, 4))
-      const currentYear = new Date().getFullYear()
-      if (year < 1990 || year > currentYear) {
-        newErrors.studentId = `입학연도는 1990~${currentYear} 사이여야 합니다.`
-      }
+      newErrors.studentId = '학번은 8자리 숫자여야 합니다. (예: 20241234)'
     }
     return newErrors
   }
@@ -274,7 +268,7 @@ export default function SignupPage() {
             type="text"
             inputMode="numeric"
             className="input-field"
-            placeholder="8자리 학번 (예: 20240001)"
+            placeholder="8자리 학번 (예: 20241234)"
             value={form.studentId}
             onChange={(e) => {
               const val = e.target.value.replace(/\D/g, '').slice(0, 8)
@@ -284,7 +278,7 @@ export default function SignupPage() {
           />
           {errors.studentId && <p className="text-red-500 text-xs mt-1">{errors.studentId}</p>}
           {form.studentId.length === 8 && !errors.studentId && (
-            <p className="text-green-500 text-xs mt-1">올바른 형식의 학번입니다.</p>
+            <p className="text-green-500 text-xs mt-1">✓ 올바른 형식의 학번입니다.</p>
           )}
         </div>
 

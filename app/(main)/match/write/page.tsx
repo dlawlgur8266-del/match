@@ -35,8 +35,20 @@ export default function WriteMatchPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.sport || !form.matchSize) {
-      toast.error('종목과 인원을 선택해주세요.')
+    if (!form.teamName.trim()) {
+      toast.error('팀명을 입력해주세요.')
+      return
+    }
+    if (!form.sport) {
+      toast.error('종목을 선택해주세요.')
+      return
+    }
+    if (!form.matchSize) {
+      toast.error('매치 인원을 선택해주세요.')
+      return
+    }
+    if (form.description.trim().length < 10) {
+      toast.error('소개글을 10자 이상 입력해주세요.')
       return
     }
     setLoading(true)
@@ -64,7 +76,7 @@ export default function WriteMatchPage() {
     }
   }
 
-  const isValid = form.teamName && form.sport && form.matchSize && form.description.length >= 10
+  const isValid = true
 
   return (
     <div className="max-w-xl mx-auto">
