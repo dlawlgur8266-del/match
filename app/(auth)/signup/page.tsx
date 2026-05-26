@@ -89,10 +89,12 @@ export default function SignupPage() {
   }
 
   const isFormValid =
-    checked.username === true &&
-    checked.nickname === true &&
+    form.username.length >= 4 &&
+    form.password.length >= 8 &&
     form.password === form.passwordConfirm &&
-    form.password.length >= 8
+    form.fullName.length >= 2 &&
+    form.nickname.length >= 2 &&
+    form.studentId.length === 8
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -274,7 +276,6 @@ export default function SignupPage() {
               const val = e.target.value.replace(/\D/g, '').slice(0, 8)
               handleChange('studentId', val)
             }}
-            maxLength={8}
           />
           {errors.studentId && <p className="text-red-500 text-xs mt-1">{errors.studentId}</p>}
           {form.studentId.length === 8 && !errors.studentId && (
