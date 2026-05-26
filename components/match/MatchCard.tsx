@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Users, Zap } from 'lucide-react'
+import { Users, Zap, MapPin } from 'lucide-react'
 import { SportBadge, LevelBadge, StatusBadge } from '@/components/ui/Badge'
 import { SPORT_META } from '@/types/database'
 import { formatDateTime } from '@/lib/utils'
@@ -67,6 +67,12 @@ export function MatchCard({ match, currentUserId, alreadyApplied = false, onAppl
             <span className="ml-2 text-slate-400">by {match.author.nickname}</span>
           )}
         </div>
+        {match.location && (
+          <div className="flex items-center gap-1 mt-0.5 text-slate-400 text-xs">
+            <MapPin size={12} />
+            <span>{match.location}</span>
+          </div>
+        )}
       </div>
 
       {/* Description */}

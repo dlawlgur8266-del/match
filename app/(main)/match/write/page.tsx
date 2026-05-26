@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { PenSquare } from 'lucide-react'
+import { PenSquare, MapPin } from 'lucide-react'
 import { SPORT_META, SPORT_ALLOWED_SIZES } from '@/types/database'
 import type { Sport, SkillLevel, MatchSize } from '@/types/database'
 import toast from 'react-hot-toast'
@@ -17,6 +17,7 @@ export default function WriteMatchPage() {
     teamName: '',
     sport: '' as Sport | '',
     matchSize: '' as MatchSize | '',
+    location: '',
     description: '',
     requiredLevel: '중급' as SkillLevel,
   })
@@ -47,6 +48,10 @@ export default function WriteMatchPage() {
       toast.error('매치 인원을 선택해주세요.')
       return
     }
+    if (!form.location.trim()) {
+      toast.error('장소를 입력해주세요.')
+      return
+    }
     if (form.description.trim().length < 10) {
       toast.error('소개글을 10자 이상 입력해주세요.')
       return
@@ -60,6 +65,7 @@ export default function WriteMatchPage() {
           teamName: form.teamName,
           sport: form.sport,
           matchSize: form.matchSize,
+          location: form.location,
           description: form.description,
           requiredLevel: form.requiredLevel,
         }),
@@ -75,8 +81,6 @@ export default function WriteMatchPage() {
       setLoading(false)
     }
   }
-
-  const isValid = true
 
   return (
     <div className="max-w-xl mx-auto">
@@ -96,7 +100,6 @@ export default function WriteMatchPage() {
             value={form.teamName}
             onChange={(e) => setForm({ ...form, teamName: e.target.value })}
             maxLength={20}
-            required
           />
         </div>
 
@@ -157,6 +160,24 @@ export default function WriteMatchPage() {
           )}
         </div>
 
+        {/* 장소 */}
+        <div>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">
+            <span className="flex items-center gap-1.5">
+              <MapPin size={15} className="text-slate-500" />
+              장소
+            </span>
+          </label>
+          <input
+            type="text"
+            className="input-field"
+            placeholder="경기 장소를 입력하세요 (예: 충북대학교 운동장)"
+            value={form.location}
+            onChange={(e) => setForm({ ...form, location: e.target.value })}
+            maxLength={50}
+          />
+        </div>
+
         {/* 소개글 */}
         <div>
           <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -170,7 +191,6 @@ export default function WriteMatchPage() {
             value={form.description}
             onChange={(e) => setForm({ ...form, description: e.target.value })}
             maxLength={500}
-            required
           />
         </div>
 
@@ -197,7 +217,7 @@ export default function WriteMatchPage() {
 
         <button
           type="submit"
-          disabled={loading || !isValid}
+          disabled={loading}
           className="btn-primary w-full py-3 flex items-center justify-center gap-2"
         >
           {loading ? (

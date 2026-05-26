@@ -22,6 +22,7 @@ export interface Match {
   team_name: string
   sport: Sport
   match_size: MatchSize
+  location: string
   description: string
   required_level: SkillLevel
   status: MatchStatus

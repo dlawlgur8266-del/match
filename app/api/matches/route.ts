@@ -27,9 +27,9 @@ export async function POST(req: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 })
 
-  const { teamName, sport, matchSize, description, requiredLevel } = await req.json()
+  const { teamName, sport, matchSize, location, description, requiredLevel } = await req.json()
 
-  if (!teamName || !sport || !matchSize || !description || !requiredLevel) {
+  if (!teamName || !sport || !matchSize || !location || !description || !requiredLevel) {
     return NextResponse.json({ error: '모든 필드를 입력해주세요.' }, { status: 400 })
   }
 
@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
       team_name: teamName,
       sport,
       match_size: matchSize,
+      location,
       description,
       required_level: requiredLevel,
       status: '모집중',
